@@ -28,7 +28,6 @@ jobs:
 
   lint-ts:
     name: Lint TypeScript Code
-    needs: lint-go
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
