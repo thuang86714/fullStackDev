@@ -2,7 +2,14 @@ package main
 
 import (
 	"github.com/thuang86714/fullStackDev/initializers"
-	"github.com/gin-gonic/gin"
+	//"github.com/gin-gonic/gin"
+	"log"
+	"net/http"
+
+	//"github.com/joho/godotenv"
+
+	"github.com/thuang86714/fullStackDev/platform/authenticator"
+	"github.com/thuang86714/fullStackDev/platform/router"
 )
 
 func init(){
@@ -10,12 +17,15 @@ func init(){
 }
 
 func main() { 
-	r := gin.Default()//default router
-	r.GET("/", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message" : "pong",
-		})
-	})
+	auth, err := authenticator.New()
+	if err != nil {
+		log.Fatalf("Failed to initialize the authenticator: %v", err)
+	}
 
-	r.Run()
+	rtr := router.New(auth)
+
+	log.Print("Server listening on http://localhost:3000/")
+	if err := http.ListenAndServe("0.0.0.0:3000", rtr); err != nil {
+		log.Fatalf("There was an error with the http server: %v", err)
+	}
 }
