@@ -1,50 +1,40 @@
-name: Build
+name: BUILD
 
 on:
-    push:
-      branches:
-        - '**'
-    pull_request:
-      branches:
-        - '**'
-
+  push:
+    branches:
+      - '**'
+  pull_request:
+    branches:
+      - '**'
 
 jobs:
-  code_analysis:
-    name: SonarQube Code Analysis
+  lint-go:
+    name: Lint Go Code
     runs-on: ubuntu-latest
-    permissions: read-all
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2
+      - name: Set up Go
+        uses: actions/setup-go@v2
         with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
-      - name: SonarQube Scan
-        uses: sonarsource/sonarqube-scan-action@master
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-      # If you wish to fail your job when the Quality Gate is red, uncomment the
-      # following lines. This would typically be used to fail a deployment.
-      # - uses: sonarsource/sonarqube-quality-gate-action@master
-      #   timeout-minutes: 5
-      #   env:
-      #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-  lint_frontend:
-    name: Lint TypeScript
-    runs-on: ubuntu-latest
-    needs: code_analysis
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+          go-version: '1.16'
+      - name: Install GolangCI-Lint
+        run: |
+          curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.42.0
+      - name: Run GolangCI-Lint
+        run: golangci-lint run ./...
 
-      - name: Use Node.js
+  lint-ts:
+    name: Lint TypeScript Code
+    needs: lint-go
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-            node-version: '20'
-
+          node-version: '14'
       - name: Install dependencies
         run: npm install
-
-      - name: Lint
-        run: npm run lint
+      - name: Run ESLint
+        run: npx eslint .
