@@ -47,8 +47,8 @@ func (a *Authenticator) VerifyIDToken(ctx context.Context, token *oauth2.Token) 
 	}
 
 	oidcConfig := &oidc.Config{
-		ClientID: a.ClientID,
+		ClientID: a.Config.ClientID,
 	}
 
-	return a.Verifier(oidcConfig).Verify(ctx, rawIDToken)
+	return a.Provider.Verifier(oidcConfig).Verify(ctx, rawIDToken)
 }
