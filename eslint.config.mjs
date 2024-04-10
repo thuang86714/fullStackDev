@@ -10,7 +10,6 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 export default {
-  root: true,
   parser: "@typescript-eslint/parser", // Use the TypeScript parser
   parserOptions: {
     ecmaVersion: 2020, // Allow modern ECMAScript features
