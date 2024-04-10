@@ -1,21 +1,41 @@
-import globals from "globals";
-import tseslint from "typescript-eslint";
-import pluginReactConfig from "eslint-plugin-react/configs/recommended.js";
-
 import path from "path";
 import { fileURLToPath } from "url";
-import { FlatCompat } from "@eslint/eslintrc";
-import pluginJs from "@eslint/js";
 
-// mimic CommonJS variables -- not needed if using CommonJS
+// Corrected imports
+import eslintPluginReact from "eslint-plugin-react";
+import eslintPluginTs from "@typescript-eslint/eslint-plugin";
+
+// Mimic CommonJS variables
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const compat = new FlatCompat({baseDirectory: __dirname, recommendedConfig: pluginJs.configs.recommended});
 
-export default [
-  {files: ["**/*.js"], languageOptions: {sourceType: "commonjs"}},
-  {languageOptions: { globals: globals.browser }},
-  ...compat.extends("standard-with-typescript"),
-  ...tseslint.configs.recommended,
-  pluginReactConfig,
-];
+export default {
+  root: true,
+  parser: "@typescript-eslint/parser", // Use the TypeScript parser
+  parserOptions: {
+    ecmaVersion: 2020, // Allow modern ECMAScript features
+    sourceType: "module", // Allow `import` statements
+    ecmaFeatures: {
+      jsx: true, // Allow JSX syntax
+    },
+    project: "./tsconfig.json", // Specify the project's tsconfig
+  },
+  plugins: [
+    "react", // Assumes eslint-plugin-react is installed
+    "@typescript-eslint", // Assumes @typescript-eslint/eslint-plugin is installed
+  ],
+  extends: [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended", // Use recommended rules from @typescript-eslint/eslint-plugin
+    "plugin:react/recommended", // Use recommended rules from eslint-plugin-react
+    // Add or replace with other configurations as needed
+  ],
+  settings: {
+    react: {
+      version: "detect", // Automatically detect the React version
+    },
+  },
+  rules: {
+    // Specify any custom rules
+  },
+};
