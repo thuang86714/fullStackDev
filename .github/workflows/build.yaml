@@ -35,6 +35,7 @@ jobs:
       
       - name: Tidy Go modules
         run: go mod tidy
+        working-directory: ./backend
       
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v4
