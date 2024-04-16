@@ -10,7 +10,7 @@ import (
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 
-	"github.com/thuang86714/fullStackDev/backend/platform/authenticator"
+	"backend/platform/authenticator"
 )
 
 // Handler for our login.

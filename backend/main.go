@@ -1,15 +1,12 @@
 package main
 
 import (
-	"github.com/thuang86714/fullStackDev/backend/initializers"
-	//"github.com/gin-gonic/gin"
+	"backend/initializers"
 	"log"
 	"net/http"
 
-	//"github.com/joho/godotenv"
-
-	"github.com/thuang86714/fullStackDev/backend/platform/authenticator"
-	"github.com/thuang86714/fullStackDev/backend/platform/router"
+	"backend/platform/authenticator"
+	"backend/platform/router"
 )
 
 func init(){

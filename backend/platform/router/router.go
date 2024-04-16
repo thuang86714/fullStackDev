@@ -8,12 +8,12 @@ import (
 	"github.com/gin-contrib/sessions/cookie"
 	"github.com/gin-gonic/gin"
 
-	"github.com/thuang86714/fullStackDev/backend/platform/authenticator"
-	"github.com/thuang86714/fullStackDev/backend/platform/middleware"
-	"github.com/thuang86714/fullStackDev/backend/web/app/callback"
-	"github.com/thuang86714/fullStackDev/backend/web/app/login"
-	"github.com/thuang86714/fullStackDev/backend/web/app/logout"
-	"github.com/thuang86714/fullStackDev/backend/web/app/user"
+	"backend/platform/authenticator"
+	"backend/platform/middleware"
+	"backend/web/app/callback"
+	"backend/web/app/login"
+	"backend/web/app/logout"
+	"backend/web/app/user"
 )
 
 // New registers the routes and returns the router.
