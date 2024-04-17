@@ -54,20 +54,22 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       
-      - name: Set permissions for ESLint
-        run: chmod +x ./backend/node_modules/.bin/eslint
-      - name: Run ESLint
-        uses: stefanoeb/eslint-action@1.0.2
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
         with:
-            files: ./backend
+          node-version: '20'  # Specify the Node.js version compatible with your project
 
-      # - name: Install dependencies
-      #   run: npm install
+      - name: Install ESLint globally
+        run: npm install -g eslint
+
+      - name: Run ESLint
+        run: eslint ./backend  # Run ESLint on the backend directory
+
+      - name: Install Jest globally (if not using a local installation)
+        run: npm install -g jest
 
       - name: Run Jest Tests
-        uses: stefanoeb/jest-action@1.0.3
-        with:
-          jestArgs: ./backend
+        run: jest ./backend  # Run Jest on the backend directory
 
   lint-test-fe-ts:
     name: Lint and Test Frontend TypeScript Code
