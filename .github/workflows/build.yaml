@@ -15,7 +15,7 @@ permissions:
 
 jobs:
   lint-go:
-    name: Lint Go Code
+    name: Lint and Test Go Code
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -24,7 +24,7 @@ jobs:
         uses: actions/setup-go@v5
         with:
           go-version: '1.22.x'
-          cache: true
+          cache: false
         
       - name: Install dependencies
         run: go mod download
@@ -48,42 +48,18 @@ jobs:
         run: go test
         working-directory: ./backend
     
-  lint-ts:
-    name: Lint TypeScript Code
+  lint-ts-backend:
+    name: Lint Backend TypeScript Code
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '20'
-          cache: 'npm'
-      
-      - name: Install dependencies
-        run: npm install
-      
-      # The "Set permissions" step might not be necessary since "npx" is being used to run ESLint,
-      # but if your CI environment requires this, keep it. Otherwise, it can be safely removed.
-      - name: Set permissions
-        run: chmod +x ./node_modules/.bin/eslint
       
       - name: Run ESLint
-        run: npx eslint .
+        uses: stefanoeb/eslint-action@1.0.2
 
-  test-ts:
-    name: Test TypeScript/React Code
-    needs: lint-ts
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '20'
-          cache: 'npm'
-      - name: Install dependencies
-        run: npm install
+      # - name: Install dependencies
+      #   run: npm install
+
       - name: Run Jest Tests
         run: npm test
       
