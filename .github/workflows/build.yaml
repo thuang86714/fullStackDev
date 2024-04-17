@@ -14,7 +14,7 @@ permissions:
   checks: write
 
 jobs:
-  lint-go:
+  lint-test-go:
     name: Lint and Test Go Code
     runs-on: ubuntu-latest
     steps:
@@ -48,18 +48,42 @@ jobs:
         run: go test
         working-directory: ./backend
     
-  lint-ts-backend:
-    name: Lint Backend TypeScript Code
+  lint-test-be-ts:
+    name: Lint and Test Backend TypeScript Code
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       
+      - name: Set permissions for ESLint
+        run: chmod +x ./backend/node_modules/.bin/eslint
       - name: Run ESLint
         uses: stefanoeb/eslint-action@1.0.2
+        with:
+            files: ./backend
 
       # - name: Install dependencies
       #   run: npm install
 
       - name: Run Jest Tests
-        run: npm test
+        uses: stefanoeb/jest-action@1.0.3
+        with:
+          jestArgs: ./backend
+
+  lint-test-fe-ts:
+    name: Lint and Test Frontend TypeScript Code
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+            
+      - name: Set permissions for ESLint
+        run: chmod +x ./backend/node_modules/.bin/eslint
+      - name: Run ESLint
+        uses: stefanoeb/eslint-action@1.0.2
+        with:
+          files: ./frontend
+        
+      - name: Run Jest Tests
+        uses: stefanoeb/jest-action@1.0.3
+        with:
+          jestArgs: ./frontend
       
