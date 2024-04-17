@@ -13,8 +13,23 @@ const __dirname = path.dirname(__filename);
 const compat = new FlatCompat({baseDirectory: __dirname, recommendedConfig: pluginJs.configs.recommended});
 
 export default [
-  {languageOptions: { globals: globals.browser }},
+  {
+    languageOptions: {
+      globals: globals.browser,
+      parser: "@typescript-eslint/parser",  // Correct parser setting for TypeScript
+      ecmaFeatures: {
+        jsx: true,  // JSX support for React
+      }
+    },
+  },
   ...compat.extends("standard-with-typescript"),
   ...tseslint.configs.recommended,
-  pluginReactConfig,
+  {
+    ...pluginReactConfig,
+    settings: {
+      react: {
+        version: "detect"  // Automatically detect React version for eslint-plugin-react
+      }
+    }
+  },
 ];
