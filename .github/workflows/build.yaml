@@ -60,13 +60,16 @@ jobs:
           node-version: '20'  # Specify the Node.js version compatible with your project
 
       - name: Install dependencies
-        run: npm install ./backend/
+        run: npm install
+        working-directory: ./backend
 
       - name: Run ESLint
-        run: npx eslint ./backend/
+        run: npx eslint ./
+        working-directory: ./backend
 
       - name: Run Jest Tests
-        run: jest ./backend  # Run Jest on the backend directory
+        run: npx jest 
+        working-directory: ./backend
 
   lint-test-fe-ts:
     name: Lint and Test Frontend TypeScript Code
