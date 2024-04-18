@@ -59,14 +59,11 @@ jobs:
         with:
           node-version: '20'  # Specify the Node.js version compatible with your project
 
-      - name: Install ESLint globally
-        run: npm install -g eslint
+      - name: Install dependencies
+        run: npm install
 
       - name: Run ESLint
         run: npx eslint ./backend/
-
-      - name: Install Jest globally (if not using a local installation)
-        run: npm install -g jest
 
       - name: Run Jest Tests
         run: jest ./backend  # Run Jest on the backend directory
