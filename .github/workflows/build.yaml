@@ -63,7 +63,7 @@ jobs:
         run: npm install -g eslint
 
       - name: Run ESLint
-        run: npx eslint ./backend
+        run: npx eslint ./backend/
 
       - name: Install Jest globally (if not using a local installation)
         run: npm install -g jest
