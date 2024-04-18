@@ -1,5 +1,5 @@
 import globals from "globals";
-import tseslint from "typescript-eslint";
+import { configs as tseslintConfigs } from "@typescript-eslint/eslint-plugin";
 import pluginReactConfig from "eslint-plugin-react/configs/recommended.js";
 
 import path from "path";
