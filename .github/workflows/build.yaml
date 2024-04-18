@@ -65,7 +65,7 @@ jobs:
       - name: Run ESLint
         run: |
           cd backend
-          eslint ./backend  # Run ESLint on the backend directory
+          eslint .  # Run ESLint on the backend directory
 
       - name: Install Jest globally (if not using a local installation)
         run: npm install -g jest
