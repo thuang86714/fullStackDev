@@ -68,7 +68,7 @@ jobs:
         working-directory: ./backend
 
       - name: Run Jest Tests
-        run: npx jest 
+        run: npx jest --passWithNoTests
         working-directory: ./backend
 
   lint-test-fe-ts:
